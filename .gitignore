@@ -1,3 +1,5 @@
 /.idea
 parking-system.iml
 /target
+rapport.txt
+.gitignore
