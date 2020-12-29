@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FareCalculatorServiceTest {
 
@@ -27,6 +26,7 @@ public class FareCalculatorServiceTest {
     @BeforeEach
     private void setUpPerTest() {
         ticket = new Ticket();
+
     }
 
     @Test
@@ -169,9 +169,17 @@ public class FareCalculatorServiceTest {
 
     @Test
     public void fivePercentDiscountForRepeatUsers() {
-// recurent = true
+        Date inTime = new Date();
+        inTime.setTime( System.currentTimeMillis() - (  45 * 60 * 1000) );//45 minutes parking time should give 3/4th parking fare
+        Date outTime = new Date();
+        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE,false);
 
-
+        ticket.setRecurring(true);
+        ticket.setInTime(inTime);
+        ticket.setOutTime(outTime);
+        ticket.setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket);
+        assertEquals((0.25 - 0.25 * 5 / 100 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice() );
     }
 
 }

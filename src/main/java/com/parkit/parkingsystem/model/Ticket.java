@@ -3,14 +3,14 @@ package com.parkit.parkingsystem.model;
 import java.util.Date;
 
 public class Ticket {
+    public boolean recurring;
     private int id;
     private ParkingSpot parkingSpot;
     private String vehicleRegNumber;
     private double price;
     private Date inTime;
     private Date outTime;
-    private boolean recurring;
-    
+
     public int getId() {
         return id;
     }
