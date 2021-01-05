@@ -25,6 +25,7 @@ public class ParkingService {
         this.inputReaderUtil = inputReaderUtil;
         this.parkingSpotDAO = parkingSpotDAO;
         this.ticketDAO = ticketDAO;
+        fareCalculatorService.setTicketDAO(ticketDAO);
     }
 
     public void processIncomingVehicle() {
@@ -44,6 +45,11 @@ public class ParkingService {
                 ticket.setPrice(0);
                 ticket.setInTime(inTime);
                 ticket.setOutTime(null);
+                boolean recurring = ticketDAO.seeIfRecurrent(vehicleRegNumber);
+                if (recurring) {
+                    System.out.println("Bienvenue à nouveau! En tant qu'utilisateur récurrent\n" +
+                            "   de notre parking, vous bénéficierez d'une réduction de 5%.");
+                }
                 ticketDAO.saveTicket(ticket);
                 System.out.println("Generated Ticket and saved in DB");
                 System.out.println("Please park your vehicle in spot number:"+parkingSpot.getId());
