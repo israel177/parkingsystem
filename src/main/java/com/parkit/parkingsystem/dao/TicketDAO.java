@@ -72,25 +72,23 @@ public class TicketDAO {
 
     public boolean seeIfRecurrent(String vehicleRegNumber) {
         Connection con = null;
-        Ticket ticket = null;
+        boolean suisJeRecurrent = false;
+
         try {
             con = dataBaseConfig.getConnection();
             PreparedStatement ps = con.prepareStatement(DBConstants.SEE_IF_RECURRENT);
             ps.setString(1, vehicleRegNumber);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ticket = new Ticket();
-                ParkingSpot parkingSpot = new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)), false);
-                ticket.setParkingSpot(parkingSpot);
-                ticket.setVehicleRegNumber(vehicleRegNumber);
-            } ticket.setRecurring(true);
+                suisJeRecurrent = true;
+            }
             dataBaseConfig.closeResultSet(rs);
             dataBaseConfig.closePreparedStatement(ps);
         } catch (Exception ex) {
             logger.error("error");
         } finally {
             dataBaseConfig.closeConnection(con);
-            return true;
+            return suisJeRecurrent;
         }
     }
 

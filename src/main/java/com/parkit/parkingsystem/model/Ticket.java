@@ -3,7 +3,6 @@ package com.parkit.parkingsystem.model;
 import java.util.Date;
 
 public class Ticket {
-    public boolean recurring;
     private int id;
     private ParkingSpot parkingSpot;
     private String vehicleRegNumber;
@@ -59,11 +58,4 @@ public class Ticket {
         this.outTime = outTime;
     }
 
-    public boolean getRecurring() {
-        return recurring;
-    }
-
-    public void setRecurring(boolean recurring) {
-        this.recurring = recurring;
-    }
 }
